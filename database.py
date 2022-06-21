@@ -1,33 +1,33 @@
 import sqlite3
 
 
-def createMoneyTable():
+def createTables():
     connection = sqlite3.connect("money.db")
     cursor = connection.cursor()
-    createMoneyTable = """
-    CREATE TABLE money (
-    id INTEGER PRIMARY KEY,
-    date DATE,
-    amount DOUBLE,
-    goal CHAR(30)
+    cursor.execute(
+    """
+    CREATE TABLE goals (
+    goal CHAR(30) PRIMARY KEY,
+    goalSum DOUBLE
     );
     """
-    cursor.execute(createMoneyTable)
+    )
+    cursor.execute(
+    """
+    CREATE TABLE money (
+    id INTEGER PRIMARY KEY NOT NULL,
+    sum DOUBLE NOT NULL,
+    payingInDate DATE NOT NULL,
+    payingOutDate Date,
+    goal CHAR(30) NOT NULL,
+    FOREIGN KEY(goal) REFERENCES goals.goal
+    );
+    """
+    )
     connection.commit()
     connection.close()
 
-def createGoalsTable():
-    connection = sqlite3.connect("money.db")
-    cursor = connection.cursor()
-    cursor.execute("""
-    CREATE TABLE goals (
-    id INTEGER PRIMARY KEY,
-    goalName CHAR(30),
-    goalSum DOUBLE
-    )
-    """)
-    connection.commit()
-    connection.close()
+
 
 def importDataIntoDB():
     connection = sqlite3.connect("money.db")

@@ -2,8 +2,7 @@ import database as db
 
 class maneMoney:
     def __init__(self, goal, startCapital, startDate):
-        db.createMoneyTable()
-        db.createGoalsTable()
+        db.createTables()
         self.GOAL = goal
         self.startCapital = startCapital
         self.startDate = startDate
