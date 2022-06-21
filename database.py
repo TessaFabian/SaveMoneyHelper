@@ -2,10 +2,12 @@ import sqlite3
 
 
 def createTables():
-    # Connection connects to money.db
     connection = sqlite3.connect("money.db")
-    cursor = connection.cursor()
-    cursor.execute(
+    goals = connection.cursor()
+    money = connection.cursor()
+
+    #Creates the table goals
+    goals.execute(
     """
     CREATE TABLE goals (
     goal CHAR(30) PRIMARY KEY,
@@ -13,18 +15,22 @@ def createTables():
     );
     """
     )
-    cursor.execute(
+
+    #Creates the table money
+    money.execute(
     """
-    CREATE TABLE money (
+    CREATE TABLE money(
     id INTEGER PRIMARY KEY NOT NULL,
     sum DOUBLE NOT NULL,
     payingInDate DATE NOT NULL,
     payingOutDate Date,
     goal CHAR(30) NOT NULL,
-    FOREIGN KEY(goal) REFERENCES goals.goal
+    FOREIGN KEY (goal) REFERENCES goals(goal)
     );
     """
     )
+
+    #commit and close
     connection.commit()
     connection.close()
 
