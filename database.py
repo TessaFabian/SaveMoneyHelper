@@ -10,21 +10,20 @@ def createTables():
     goal CHAR(30) PRIMARY KEY,
     goalSum DOUBLE
     );
-    """
-    )
-    cursor.execute(
-    """
+
     CREATE TABLE money (
-    id INTEGER PRIMARY KEY NOT NULL,
-    sum DOUBLE NOT NULL,
-    payingInDate DATE NOT NULL,
-    payingOutDate Date,
+    id INTEGER PRIMARY KEY,
+    amount DOUBLE NOT NULL,
+    payingIn DATE NOT NULL,
+    payingOut DATE,
     goal CHAR(30) NOT NULL,
     FOREIGN KEY(goal) REFERENCES goals.goal
     );
     """
     )
+
     connection.commit()
+
     connection.close()
 
 
