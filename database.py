@@ -2,6 +2,7 @@ import sqlite3
 
 
 def createTables():
+    # Connection connects to money.db
     connection = sqlite3.connect("money.db")
     cursor = connection.cursor()
     cursor.execute(
