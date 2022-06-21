@@ -3,11 +3,10 @@ import sqlite3
 
 def createTables():
     connection = sqlite3.connect("money.db")
-    goals = connection.cursor()
-    money = connection.cursor()
+    cursor = connection.cursor()
 
     #Creates the table goals
-    goals.execute(
+    cursor.execute(
     """
     CREATE TABLE goals (
     goal CHAR(30) PRIMARY KEY,
@@ -17,7 +16,7 @@ def createTables():
     )
 
     #Creates the table money
-    money.execute(
+    cursor.execute(
     """
     CREATE TABLE money(
     id INTEGER PRIMARY KEY NOT NULL,
