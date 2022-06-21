@@ -1,12 +1,16 @@
 import database as db
 
 class maneMoney:
-    def __init__(self, goal, startCapital, startDate):
+    def __init__(self, goal, goalName, startCapital, startDate):
         db.createTables()
         self.GOAL = goal
+        self.GOALNAME = goalName
         self.startCapital = startCapital
         self.startDate = startDate
         self.envelope = {self.startDate: self.startCapital}
+
+    def getGoal(self):
+        return self.GOAL
 
     def summarizeSavedCapital(self):
         return round(sum(self.envelope.values()), 2)
@@ -27,12 +31,6 @@ class maneMoney:
         print("Angesparter Betrag in Prozent: "+str(round(relSavedCapital))+" %")
         print("Noch anzusparender Betrag: "+str(round(relOpenCapital))+" %")
 
-taigoFund = maneMoney(10000.00, 170.00, "13.06.22")
-print(taigoFund.GOAL)
-print(taigoFund.startCapital)
-print(taigoFund.startDate)
-print(taigoFund.envelope)
-taigoFund.putMoneyInEnvelope("14.05.23", 123.45)
-print(taigoFund.summarizeSavedCapital())
-taigoFund.printAbsSavedMoney()
-taigoFund.printRelativeSavedMoney()
+taigoFund = maneMoney(10000.00, "Taigo", 170.00, "13.06.22")
+db.importGoalIntoDB(taigoFund.GOALNAME, taigoFund.GOAL)
+db.getDataFromDB()

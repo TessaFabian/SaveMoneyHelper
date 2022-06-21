@@ -2,7 +2,7 @@ import sqlite3
 
 
 def createTables():
-    connection = sqlite3.connect("money.db")
+    connection = sqlite3.connect("money")
     cursor = connection.cursor()
 
     #Creates the table goals
@@ -19,10 +19,10 @@ def createTables():
     cursor.execute(
     """
     CREATE TABLE money(
-    id INTEGER PRIMARY KEY NOT NULL,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     sum DOUBLE NOT NULL,
-    payingInDate DATE NOT NULL,
-    payingOutDate Date,
+    payingInDate String NOT NULL,
+    payingOutDate String,
     goal CHAR(30) NOT NULL,
     FOREIGN KEY (goal) REFERENCES goals(goal)
     );
@@ -35,20 +35,39 @@ def createTables():
 
 
 
-def importDataIntoDB():
-    connection = sqlite3.connect("money.db")
+def importDataIntoDB(statement):
+    connection = sqlite3.connect("money")
     cursor = connection.cursor()
+    cursor.execute(statement)
+    connection.commit()
+    connection.close()
+
+def importGoalIntoDB(goalName, goalSum):
+    connection = sqlite3.connect("money")
+    cursor = connection.cursor()
+    cursor.execute("""
+    INSERT INTO goals(goal, goalSum)
+    VALUES('"""
+    +goalName+
+    """ ',"""
+    +str(goalSum)+
+    """);""")
+
     connection.commit()
     connection.close()
 
 def deleteDataFromDB():
     pass
 
-def getDataFromDB(statement):
-    connection = sqlite3.connect("money.db")
+def getDataFromDB():
+    connection = sqlite3.connect("money")
     cursor = connection.cursor()
+    cursor.execute("""
+    select * from goals;
+    """)
+    
+    rows = cursor.fetchall()
+    for row in rows:
+        print(row)
 
-    cursor.execute(statement)
-
-    connection.commit()
     connection.close()
