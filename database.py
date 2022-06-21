@@ -3,7 +3,7 @@ import sqlite3
 
 def createTables():
     connection = sqlite3.connect("money.db")
-    goals = connection.cursor()
+    curser = connection.cursor()
     cursor.execute(
     """
     CREATE TABLE goals (
